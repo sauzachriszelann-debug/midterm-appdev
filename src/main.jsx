@@ -65,6 +65,7 @@ function App() {
   });
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const [productCategory, setProductCategory] = useState("All");
+  const [productSearch, setProductSearch] = useState("");
   const [orderFilters, setOrderFilters] = useState({ status: "All", buyer: "", date: "" });
   const [notice, setNotice] = useState("");
   const [contactError, setContactError] = useState("");
@@ -89,9 +90,11 @@ function App() {
     [orders]
   );
 
-  const visibleProducts = products.filter(
-    (product) => productCategory === "All" || product.category === productCategory
-  );
+  const visibleProducts = products.filter((product) => {
+    const categoryMatch = productCategory === "All" || product.category === productCategory;
+    const searchMatch = product.name.toLowerCase().includes(productSearch.toLowerCase());
+    return categoryMatch && searchMatch;
+  });
 
   const visibleOrders = orders.filter((order) => {
     const searchText = orderFilters.buyer.toLowerCase();
@@ -393,14 +396,24 @@ function App() {
           <section className="panel wide-panel">
             <div className="section-head">
               <h2>Product List</h2>
-              <label className="inline-filter">
-                <Filter size={17} />
-                <select value={productCategory} onChange={(event) => setProductCategory(event.target.value)}>
-                  <option>All</option>
-                  <option>Crop</option>
-                  <option>Fishery</option>
-                </select>
-              </label>
+              <div className="product-tools">
+                <label className="inline-filter search-filter">
+                  <Search size={17} />
+                  <input
+                    value={productSearch}
+                    onChange={(event) => setProductSearch(event.target.value)}
+                    placeholder="Search product"
+                  />
+                </label>
+                <label className="inline-filter">
+                  <Filter size={17} />
+                  <select value={productCategory} onChange={(event) => setProductCategory(event.target.value)}>
+                    <option>All</option>
+                    <option>Crop</option>
+                    <option>Fishery</option>
+                  </select>
+                </label>
+              </div>
             </div>
             <div className="table-wrap">
               <table>

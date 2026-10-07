@@ -231,6 +231,21 @@ h2 {
   align-items: center;
 }
 
+.product-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.product-tools .inline-filter {
+  width: 190px;
+}
+
+.product-tools .search-filter {
+  width: 240px;
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -479,6 +494,13 @@ h2 {
   .order-line,
   .filters {
     grid-template-columns: 1fr;
+  }
+
+  .section-head,
+  .product-tools,
+  .product-tools .inline-filter,
+  .product-tools .search-filter {
+    width: 100%;
   }
 
   .order-line button {
